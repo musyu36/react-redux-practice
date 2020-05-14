@@ -1,18 +1,35 @@
-import React from "react";
+import React, { Component } from "react";
 
-function App() {
+// class App extends Component {
+//   render() {
+//     return (
+//       // React.Fragmentで余計なdivを削減できる
+//       <React.Fragment>
+//         <label htmlFor="bar">bar</label>
+//         <input
+//           type="text"
+//           onClick={() => {
+//             console.log("asdfasdf");
+//           }}
+//         />
+//       </React.Fragment>
+//     );
+//   }
+// }
+
+const App = () => {
   return (
-    // React.Fragmentで余計なdivを削減できる
-    <React.Fragment>
-      <label htmlFor="bar">bar</label>
-      <input
-        type="text"
-        onClick={() => {
-          console.log("asdfasdf");
-        }}
-      />
-    </React.Fragment>
+    <div>
+      <Cat />
+      <Cat />
+      <Cat />
+      <Cat />
+    </div>
   );
-}
+};
+
+const Cat = () => {
+  return <div>meow</div>;
+};
 
 export default App;
