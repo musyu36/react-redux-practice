@@ -14,6 +14,14 @@ class EventsShow extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onDeleteClick = this.onDeleteClick.bind(this);
   }
+
+  // レンダリング完了時に情報を取ってくる
+  componentDidMount() {
+    const { id } = this.props.match.params;
+    if (id) {
+      this.props.getEvent(id);
+    }
+  }
   renderField(field) {
     const {
       input,
@@ -29,6 +37,7 @@ class EventsShow extends Component {
     );
   }
 
+  // 削除
   async onDeleteClick() {
     // idを取得
     const { id } = this.props.match.params;
@@ -37,7 +46,7 @@ class EventsShow extends Component {
   }
 
   async onSubmit(values) {
-    // await this.props.postEvent(values);
+    await this.props.putEvent(values);
     // リダイレクト
     this.props.history.push("/");
   }
@@ -86,11 +95,22 @@ const validate = (values) => {
   return errors;
 };
 
-const mapDispatchToProps = { deleteEvent };
+const mapStateToProps = (state, ownProps) => {
+  const event = state.events[ownProps.match.params.id];
+  return { initialValues: event, event };
+};
+
+// コンポーネントにactionの関数をバインド
+const mapDispatchToProps = { deleteEvent, getEvent, putEvent };
 
 // connectは関数を返す高階関数，connect(connectが受け取る引数)(connectが返す関数が受け取る引数)
 // reduxFromも同様に高階関数
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
-)(reduxForm({ validate, form: "eventShowForm" })(EventsShow));
+)(
+  //titleとbodyを表示するためenabledInitializeをtrueに
+  reduxForm({ validate, form: "eventShowForm", enabledInitialize: true })(
+    EventsShow
+  )
+);
