@@ -1,21 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
+import thunk from "redux-thunk";
 
 import "./index.css";
 import reducer from "./reducers";
 
-import App from "./components/App";
+import EventsIndex from "./components/events_index";
 import * as serviceWorker from "./serviceWorker";
 
 // storeはアプリ内で唯一で，全てのstateはstoreに集約
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(thunk));
 
-// ProviderでAppをラップし，storeを渡して置くことで全コンポーネントがstoreにアクセス出来る
+// Providerでevents_indexをラップし，storeを渡して置くことで全コンポーネントがstoreにアクセス出来る
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <EventsIndex />
   </Provider>,
   document.getElementById("root")
 );
