@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 
 // stateとactionsの紐付けに必要
 import { connect } from "react-redux";
@@ -37,6 +38,8 @@ class EventsIndex extends Component {
           </thead>
           <tbody>{this.renderEvents()}</tbody>
         </table>
+
+        <Link to="/events/new">New Event</Link>
       </React.Fragment>
     );
   }
